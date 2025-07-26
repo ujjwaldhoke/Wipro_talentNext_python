@@ -1,0 +1,22 @@
+import sys
+
+def main():
+    if len(sys.argv) != 4:
+        print("Please provide exactly three arguments.")
+        return
+
+    liked = set(sys.argv[1].split("-"))
+    disliked = set(sys.argv[2].split("-"))
+    given = sys.argv[3].split("-")
+
+    happiness = 0
+    for num in given:
+        if num in liked:
+            happiness += 1
+        elif num in disliked:
+            happiness -= 1
+
+    print(happiness)
+
+if __name__ == "__main__":
+    main()
