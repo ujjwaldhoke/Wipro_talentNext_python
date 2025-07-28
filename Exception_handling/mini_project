@@ -1,0 +1,44 @@
+def main():
+    try:
+        file_name = input().strip()
+        total_amount, total_items, free_items = process_file(file_name)
+        discount_amount = calculate_discount(total_amount)
+        final_amount = total_amount - discount_amount
+        print(total_items)
+        print(free_items)
+        print(total_amount)
+        print(discount_amount)
+        print(final_amount)
+    except Exception as e:
+        print(f"Error: {e}")
+
+def process_file(file_name):
+    total_amount = 0
+    total_items = 0
+    free_items = 0
+    try:
+        with open(file_name, 'r') as file:
+            for line in file:
+                try:
+                    item_name, price = line.strip().split()
+                    price = float(price)
+                    total_items += 1
+                    if price == 0:
+                        free_items += 1
+                    total_amount += price
+                except ValueError:
+                    raise ValueError(f"Invalid data: {line.strip()}")
+    except FileNotFoundError:
+        raise FileNotFoundError(f"File '{file_name}' not found.")
+    return total_amount, total_items, free_items
+
+def calculate_discount(total_amount):
+    discount_percentage = 0
+    if total_amount > 500:
+        discount_percentage = 20
+    elif total_amount > 200:
+        discount_percentage = 10
+    return total_amount * (discount_percentage / 100)
+
+if __name__ == "__main__":
+    main()
